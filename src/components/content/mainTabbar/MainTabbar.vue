@@ -1,6 +1,5 @@
 <template>
     <tab-bar>
-      <!-- 在DOM中使用虚拟路径需要在路径前面添加~符号 -->
       <tab-bar-item path="/home" activeColor="red">
         <img slot="item-icon" src="~assets/img/tabbar/home.svg">
         <img slot="item-icon-active" src="~assets/img/tabbar/home_active.svg" alt="">
@@ -28,7 +27,7 @@ import TabBar from 'components/common/tabbar/TabBar'
 import TabBarItem from 'components/common/tabbar/TabBarItem'
 
 export default {
-    name:'MainTabBar',
+    name:'MainTabbar',
     components:{
         TabBar,
         TabBarItem
