@@ -5,56 +5,7 @@
         <recommend-view :recommends="recommends"/>
         <feature-view />
         <tab-control class="tab-control" :titles="['流行','新款','精选']"/>
-        <ul>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-            <li>i</li>
-        </ul>
+        <goods-list :goods="goods['pop'].list" />
     </div>
 </template>
 <script>
@@ -64,6 +15,7 @@
 
     import NavBar from 'components/common/navbar/NavBar'
     import TabControl from 'components/content/tabControl/TabControl'
+    import GoodsList from 'components/content/goods/GoodsList'
 
     import {getHomeMultidata,getHomeGoods} from "network/home"
 
@@ -74,7 +26,8 @@
             RecommendView,
             FeatureView,
             NavBar,
-            TabControl
+            TabControl,
+            GoodsList
         },
         data(){
             return{
@@ -130,5 +83,6 @@
     .tab-control{
         position: sticky;
         top: 44px;
+        z-index: 9;
     }
 </style>
