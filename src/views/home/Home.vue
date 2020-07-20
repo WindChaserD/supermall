@@ -1,8 +1,7 @@
 <template>
     <div id="home">
         <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-        <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true"
-        @pullingUp="loadMore">
+        <scroll class="content" ref="scroll" :probe-type="3" @scroll="contentScroll" :pull-up-load="true">
             <home-swiper :banners="banners"/>
             <recommend-view :recommends="recommends"/>
             <feature-view />
@@ -59,6 +58,15 @@
             this.getHomeGoods('pop')
             this.getHomeGoods('new')
             this.getHomeGoods('sell')
+
+            
+        },
+        mounted(){
+            //3.监听item中图片加载完成
+            this.$bus.$on('itemImageLoad',()=>{
+                // console.log('-----');
+                this.$refs.scroll.refresh()
+            })
         },
         computed:{
             showGoods(){
@@ -89,11 +97,11 @@
             contentScroll(position){
                 this.isShowBackTop = position.y < -1000
             },
-            loadMore(){
-                this.getHomeGoods(this.currentType)
+            // loadMore(){
+            //     this.getHomeGoods(this.currentType)
 
-                this.$refs.scroll.scroll.refresh()
-            },
+            //     this.$refs.scroll.scroll.refresh()
+            // },
 
 
             /** 
@@ -112,7 +120,7 @@
                     this.goods[type].list.push(...res.data.list)
                     this.goods[type].page += 1
 
-                    this.$refs.scroll.finishPullUp()
+                    // this.$refs.scroll.finishPullUp()
                 })
             },
             
