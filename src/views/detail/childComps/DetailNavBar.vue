@@ -1,5 +1,8 @@
 <template>
     <nav-bar>
+        <div slot="left" class="back" @click="backClick">
+            <img src="~assets/img/common/back.svg" alt="">
+        </div>
         <div slot="center" class="title">
             <div v-for="(item,index) in titles" :key="index" class="title-item"
             :class="{active:index === currentIndex}" @click="titleClick(index)">
@@ -25,8 +28,11 @@
         methods:{
             titleClick(index){
                 this.currentIndex = index
+            },
+            backClick(){
+                this.$router.go(-1)//作用等效于this.$router.back()
             }
-        }
+        },
     }
 </script>
 <style scoped>
@@ -39,5 +45,8 @@
     }
     .active{
         color: var(--color-high-text);
+    }
+    .back img{
+        margin-top: 12px;
     }
 </style>
