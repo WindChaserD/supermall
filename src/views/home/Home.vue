@@ -27,6 +27,7 @@
 
     import {getHomeMultidata,getHomeGoods} from "network/home"
     import {debounce} from "common/utils"
+    import {itemListenerMixin} from "common/mixin"
 
     export default {
         name:"Home",
@@ -38,8 +39,9 @@
             TabControl,
             GoodsList,
             Scroll,
-            BackTop
+            BackTop,
         },
+        mixins:[itemListenerMixin],
         data(){
             return{
                 banners:[],
@@ -53,7 +55,7 @@
                 isShowBackTop: false,
                 tabOffsetTop: 0,
                 isTabFixed:false,
-                saveY:0
+                saveY:0,
             }
         },
         created(){
@@ -68,12 +70,13 @@
             
         },
         mounted(){
-            //1.图片加载完成的事件监听
-            const refresh = debounce(this.$refs.scroll.refresh,500)
-            ////监听item中图片加载完成
-            this.$bus.$on('itemImageLoad',()=>{
-                refresh()
-            })
+            // 此代码被使用到mixin.js中
+            // //1.图片加载完成的事件监听
+            // const refresh = debounce(this.$refs.scroll.refresh,500)
+            // ////监听item中图片加载完成
+            // this.$bus.$on('itemImageLoad',() => {
+            //     refresh()
+            // })
 
             //2.获取tabControl的offsetTop
             ////所有的组件都有一个属性$el:用于获取组件中的元素
@@ -145,8 +148,8 @@
             },
             
         },
-        destoryed(){
-            console.log("destoryed");
+        destroyed(){
+            this.$bus.$off('itemImageLoad',this.itemImgLister)
         },
         activated(){
             this.$refs.scroll.scrollTo(0,this.saveY,0)
@@ -154,6 +157,7 @@
         },
         deactivated(){
             this.saveY = this.$refs.scroll.getScrollY()
+            this.$bus.$on('itemImageLoad',this.itemImgListener)
             // console.log(this.saveY);
         }
     }

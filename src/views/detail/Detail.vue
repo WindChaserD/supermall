@@ -8,6 +8,7 @@
             <detail-goods-info :detail-info="detailInfo" @imageLoad="imageLoad"/>
             <detail-param-info :param-info="paramInfo"/>
             <detail-comment-info ref="comment" :comment-info="commentInfo"></detail-comment-info>
+            <goods-list :goods="recommends"/>
         </scroll>
     </div>
 </template>
@@ -21,8 +22,10 @@
     import DetailCommentInfo from './childComps/DetailCommentInfo'
 
     import Scroll from 'components/common/scroll/Scroll'
+    import GoodsList from 'components/content/goods/GoodsList'
 
     import {getDetail, Goods, Shop, GoodsParam, getRecommend} from 'network/detail'
+    import {itemListenerMixin} from "common/mixin"
 
     export default {
         name:'Detail',
@@ -35,7 +38,9 @@
             DetailParamInfo,
             DetailCommentInfo,
             Scroll,
+            GoodsList
         },
+        mixins:[itemListenerMixin],
         data(){
             return{
                 iid:null,
@@ -45,7 +50,8 @@
                 detailInfo:{},
                 paramInfo:{},
                 commentInfo:{},
-                
+                recommends:[],
+                test:true
             }
         },
         created(){
@@ -75,11 +81,18 @@
                     this.commentInfo = data.rate.list[0];
                 }
             })
+            //3.请求推荐数据
+            getRecommend().then(res => {
+                this.recommends = res.data.list
+            })
         },
         methods:{
             imageLoad(){
                 this.$refs.scroll.refresh()
             }
+        },
+        destroyed(){
+            this.$bus.$off('itemImageLoad',this.itemImgLister)
         }
     }
 </script>
