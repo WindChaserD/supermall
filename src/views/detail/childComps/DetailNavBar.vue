@@ -28,6 +28,7 @@
         methods:{
             titleClick(index){
                 this.currentIndex = index
+                this.$emit('titleClick',index)
             },
             backClick(){
                 this.$router.go(-1)//作用等效于this.$router.back()

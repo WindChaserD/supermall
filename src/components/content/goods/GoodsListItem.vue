@@ -32,10 +32,6 @@
             //return this.goodsItem.show.img || this.goodsItem.image  //F
             return this.goodsItem.image || this.goodsItem.show.img    //T
           }
-        },mounted(){
-            console.log("--------");
-            console.log(this.goodsItem);
-            console.log("--------");
         },
     }
 </script>

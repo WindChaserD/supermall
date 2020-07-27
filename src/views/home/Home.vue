@@ -148,16 +148,13 @@
             },
             
         },
-        destroyed(){
-            this.$bus.$off('itemImageLoad',this.itemImgLister)
-        },
         activated(){
             this.$refs.scroll.scrollTo(0,this.saveY,0)
             this.$refs.scroll.refresh()
         },
         deactivated(){
             this.saveY = this.$refs.scroll.getScrollY()
-            this.$bus.$on('itemImageLoad',this.itemImgListener)
+            this.$bus.$off('itemImageLoad',this.itemImgListener)
             // console.log(this.saveY);
         }
     }
