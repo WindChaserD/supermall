@@ -1,3 +1,4 @@
+import BackTop from 'components/content/backTop/BackTop'
 import {debounce} from "./utils"
 
 export const itemListenerMixin = {
@@ -12,5 +13,22 @@ export const itemListenerMixin = {
             refresh()
         }
         this.$bus.$on('itemImageLoad',this.itemImgLister)
+    }
+}
+
+export const backTopMixin = {
+    components:{
+        BackTop
+    },
+    data(){
+        return{
+            isShowBackTop: false,
+        }
+    },
+    methods:{
+        backClick(){
+            // console.log('back to top');
+            this.$refs.scroll.scrollTo(0, 0)
+        },
     }
 }

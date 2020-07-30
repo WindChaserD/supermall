@@ -10,7 +10,8 @@
             <detail-comment-info ref="comment" :comment-info="commentInfo"></detail-comment-info>
             <goods-list ref="recommend" :goods="recommends"/>
         </scroll>
-        <detail-bottom-bar />
+        <detail-bottom-bar @addToCart="addToCart"/>
+        <back-top @click.native="backClick()" v-show="isShowBackTop" />
     </div>
 </template>
 <script>
@@ -28,7 +29,7 @@
 
     import {debounce} from 'common/utils'
     import {getDetail, Goods, Shop, GoodsParam, getRecommend} from 'network/detail'
-    import {itemListenerMixin} from "common/mixin"
+    import {itemListenerMixin,backTopMixin} from "common/mixin"
 
     export default {
         name:'Detail',
@@ -45,7 +46,7 @@
             GoodsList,
             getThemeTopY:null
         },
-        mixins:[itemListenerMixin],
+        mixins:[itemListenerMixin,backTopMixin],
         data(){
             return{
                 iid:null,
@@ -116,15 +117,29 @@
             contentScroll(position){
                 //1.获取Y值
                 const positionY = -position.y
-                //2.positionY和主题中的值进行对比
+                //2.判断backtop的显示状态
+                this.isShowBackTop = positionY > 1000
+                //3.positionY和主题中的值进行对比
                 let length = this.themeTopYs.length
                 for(let i = 0;i < length -1 ;i++){
                     if(this.currentIndex !== i && (positionY>=this.themeTopYs[i]&&positionY<this.themeTopYs[i+1])){
                         this.currentIndex = i;
                         this.$refs.nav.currentIndex = this.currentIndex
                     }
-                    
                 }
+            },
+            addToCart(){
+                //1.获取购物车需要展示的信息
+                const product = {}
+                product.image = this.topImages[0]
+                product.title = this.goods.title
+                product.desc = this.goods.desc
+                product.price = this.goods.realPrice
+                product.iid = this.iid
+
+                //2.将商品添加到购物车中
+                // this.$store.commit('addCart',product)
+                this.$store.dispatch('addCart',product)
             }
         },
         mounted(){
