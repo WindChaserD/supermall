@@ -1,5 +1,6 @@
 <template>
     <div class="wrapper" ref="aaaa">
+        <!-- 测试betterscroll -->
         <ul class="content">
             <li>分类列表1</li>
             <li>分类列表2</li>
