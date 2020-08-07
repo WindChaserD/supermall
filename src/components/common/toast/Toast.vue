@@ -25,7 +25,7 @@
             }
         },
         methods:{
-            show(message, duration = 2000){
+            show(message = 'default', duration = 2000){
                 this.isShow = true
                 this.message = message
 

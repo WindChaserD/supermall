@@ -12,7 +12,6 @@
         </scroll>
         <detail-bottom-bar @addToCart="addToCart"/>
         <back-top @click.native="backClick()" v-show="isShowBackTop" />
-        <toast :message="message" :show="show"/>
     </div>
 </template>
 <script>
@@ -27,7 +26,6 @@
 
     import Scroll from 'components/common/scroll/Scroll'
     import GoodsList from 'components/content/goods/GoodsList'
-    import Toast from 'components/common/toast/Toast'
 
     import {debounce} from 'common/utils'
     import {getDetail, Goods, Shop, GoodsParam, getRecommend} from 'network/detail'
@@ -46,8 +44,6 @@
             DetailBottomBar,
             Scroll,
             GoodsList,
-            Toast,
-            
         },
         mixins:[itemListenerMixin,backTopMixin],
         data(){
